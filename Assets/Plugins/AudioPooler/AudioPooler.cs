@@ -16,6 +16,7 @@ namespace Plugins.AudioPooler
         [SerializeField] private int _initialSize;
         [SerializeField] private bool _autoExpand;
         [SerializeField] private int _maxSize;
+        [SerializeField] private bool _allocateMaxMemory;
 
         [Space]
         [SerializeField] private AudioSettings _defaultSettings;
@@ -25,6 +26,8 @@ namespace Plugins.AudioPooler
         private HashSet<AudioPoolItem> _inactivePool;
 
         private int _idGiver;
+
+        private int CollectionCapacity => _allocateMaxMemory ? _maxSize : _initialSize;
 
         #region MonoBehaviour
 
@@ -53,9 +56,11 @@ namespace Plugins.AudioPooler
 
         private void Init()
         {
-            _pool = new HashSet<AudioPoolItem>(_initialSize);
-            _activePool = new Dictionary<int, AudioPoolItem>(_initialSize);
-            _inactivePool = new HashSet<AudioPoolItem>(_initialSize);
+            int collectionCapacity = CollectionCapacity;
+
+            _pool = new HashSet<AudioPoolItem>(collectionCapacity);
+            _activePool = new Dictionary<int, AudioPoolItem>(collectionCapacity);
+            _inactivePool = new HashSet<AudioPoolItem>(collectionCapacity);
 
             for (int i = 0; i < _initialSize; i++)
             {
@@ -66,14 +71,19 @@ namespace Plugins.AudioPooler
         private AudioPoolItem AddNewPoolItem(AudioSettings settings)
         {
             AudioPoolItem poolItem = CreatePoolItem(_defaultSettings);
-            _pool.Add(poolItem);
-            _inactivePool.Add(poolItem);
-
-            AddListener(poolItem);
+            AddPoolItem(poolItem);
 
             return poolItem;
         }
 
+        private void AddPoolItem(AudioPoolItem poolItem)
+        {
+            _pool.Add(poolItem);
+            _inactivePool.Add(poolItem);
+
+            AddListener(poolItem);
+        }
+        
         private AudioPoolItem CreatePoolItem(AudioSettings settings)
         {
             GameObject poolItemGO = new GameObject("AudioPoolItem");
