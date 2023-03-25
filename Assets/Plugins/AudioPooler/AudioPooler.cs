@@ -403,7 +403,7 @@ namespace Plugins.AudioPooler
 
             if (leastImportant == null)
             {
-                return _activePool.First().Value;
+                return _activePool.Last().Value;
             }
 
             return leastImportant;

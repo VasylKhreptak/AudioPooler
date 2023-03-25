@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &123984250
 Transform:
   m_ObjectHideFlags: 0
@@ -383,9 +383,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 730794656}
-  _initialSize: 2
+  _initialSize: 5
   _autoExpand: 1
-  _maxSize: 3
+  _maxSize: 20
+  _allocateMaxMemory: 0
   _defaultSettings:
     clip: {fileID: 0}
     audioMixerGroup: {fileID: 0}
@@ -690,6 +691,82 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222131953}
   m_Enabled: 1
+--- !u!1 &1527346724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1527346725}
+  - component: {fileID: 1527346726}
+  m_Layer: 0
+  m_Name: MassivePlayTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1527346725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527346724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -16.91257, y: -0.16051978, z: -9.871434}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1527346726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527346724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb6ac16200e2624eb92edb6ac26860a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 1222131957}
+  _audioPooler: {fileID: 730794657}
+  _start: 282
+  _stop: 283
+  _delay: 0.01
+  _range: 25
+  _settings:
+    clip: {fileID: 8300000, guid: cec68aec87775e7418cb79933b4b4915, type: 3}
+    audioMixerGroup: {fileID: 0}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    linkOnPlay: 0
+    linkerData:
+      linkTo: {fileID: 0}
+      offset: {x: 0, y: 0, z: 0}
+      axes: {x: 1, y: 1, z: 1}
+    playPosition: {x: 0, y: 0, z: 0}
+    _audio3DSettings:
+      dopplerLevel: 1
+      spread: 0
+      rolloffMode: 0
+      minDistance: 1
+      maxDistance: 500
 --- !u!1 &1611005626
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,7 +855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1767417986
 Transform:
   m_ObjectHideFlags: 0
@@ -947,7 +1024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1841690605
 Transform:
   m_ObjectHideFlags: 0
