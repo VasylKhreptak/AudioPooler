@@ -189,12 +189,12 @@ namespace Plugins.AudioPooler
             poolItem.transform.position = settings.playPosition;
 
             poolItem.gameObject.SetActive(true);
-            
+
             if (settings.linkOnPlay)
             {
                 poolItem.linker.StartUpdating(settings.linkerData);
             }
-            
+
             poolItem.audioSource.Play();
 
             if (settings.loop == false)
@@ -294,6 +294,22 @@ namespace Plugins.AudioPooler
             foreach (AudioPoolItem poolItem in _activePool.Values.ToArray())
             {
                 Resume(poolItem);
+            }
+        }
+
+        public void StartLinking(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.linker.StartUpdating(poolItem.settings.linkerData);
+            }
+        }
+
+        public void StopLinking(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.linker.StopUpdating();
             }
         }
 
