@@ -45,8 +45,6 @@ namespace Plugins.AudioPooler
 
         private void OnDestroy()
         {
-            KillDelays();
-
             RemoveListeners();
         }
 
@@ -64,11 +62,11 @@ namespace Plugins.AudioPooler
 
             for (int i = 0; i < _initialSize; i++)
             {
-                RegisterNewPoolItem(_defaultSettings);
+                RegisterNewPoolItem();
             }
         }
 
-        private AudioPoolItem RegisterNewPoolItem(AudioSettings settings)
+        private AudioPoolItem RegisterNewPoolItem()
         {
             AudioPoolItem poolItem = CreatePoolItem(_defaultSettings);
             RegisterPoolItem(poolItem);
@@ -430,7 +428,7 @@ namespace Plugins.AudioPooler
 
             if (CanExpand())
             {
-                return RegisterNewPoolItem(_defaultSettings);
+                return RegisterNewPoolItem();
             }
 
             AudioPoolItem poolItem = GetLeastImportant();
@@ -464,14 +462,6 @@ namespace Plugins.AudioPooler
         }
 
         #endregion
-
-        private void KillDelays()
-        {
-            foreach (AudioPoolItem poolItem in _pool)
-            {
-                poolItem.waitTween.Kill();
-            }
-        }
 
         #region DataValidation
 
