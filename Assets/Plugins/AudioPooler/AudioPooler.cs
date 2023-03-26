@@ -346,6 +346,16 @@ namespace Plugins.AudioPooler
             }
         }
 
+        public Transform GetTransform(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                return poolItem.transform;
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Core
