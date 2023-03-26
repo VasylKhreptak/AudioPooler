@@ -83,7 +83,7 @@ namespace Plugins.AudioPooler
 
             AddListener(poolItem);
         }
-        
+
         private AudioPoolItem CreatePoolItem(AudioSettings settings)
         {
             GameObject poolItemGO = new GameObject("AudioPoolItem");
@@ -205,7 +205,7 @@ namespace Plugins.AudioPooler
                 poolItem.linker.StartUpdating(settings.linkerData);
             }
 
-            poolItem.audioSource.Play();
+            Play(poolItem);
 
             if (settings.loop == false)
             {
@@ -264,6 +264,21 @@ namespace Plugins.AudioPooler
             if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
             {
                 poolItem.audioSource.volume = volume;
+            }
+        }
+
+        public void SetVolumeSmooth(int ID, float volume, float time, bool stopOnComplete = false, Ease ease = Ease.Linear)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.volumeTween?.Kill();
+                poolItem.volumeTween = poolItem.audioSource
+                    .DOFade(volume, time)
+                    .SetEase(ease)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    });
             }
         }
 
@@ -327,23 +342,38 @@ namespace Plugins.AudioPooler
 
         #region Core
 
+        private void Play(AudioPoolItem poolItem)
+        {
+            poolItem.audioSource.Play();
+            poolItem.onPlay?.Invoke();
+            poolItem.isPaused = false;
+        }
+
         private void Stop(AudioPoolItem poolItem)
         {
+            if (poolItem.gameObject.activeSelf == false) return;
+
             poolItem.waitTween.Kill();
             poolItem.audioSource.Stop();
             poolItem.linker.StopUpdating();
+            poolItem.onStop?.Invoke();
             poolItem.gameObject.SetActive(false);
+            poolItem.isPaused = false;
         }
 
         private void Pause(AudioPoolItem poolItem)
         {
+            if (poolItem.isPaused) return;
+
             poolItem.waitTween.Pause();
             poolItem.audioSource.Pause();
+            poolItem.onPause?.Invoke();
+            poolItem.isPaused = true;
         }
 
         private void Resume(AudioPoolItem poolItem)
         {
-            if (poolItem.audioSource.isPlaying) return;
+            if (poolItem.audioSource.isPlaying || poolItem.isPaused == false) return;
 
             if (poolItem.settings.loop == false)
             {
@@ -351,11 +381,17 @@ namespace Plugins.AudioPooler
             }
 
             poolItem.audioSource.Play();
+            poolItem.onResume?.Invoke();
+            poolItem.isPaused = false;
         }
 
         private void Mute(AudioPoolItem poolItem, bool mute)
         {
+            if (poolItem.audioSource.mute == mute) return;
+
             poolItem.audioSource.mute = mute;
+
+            (mute ? poolItem.onMute : poolItem.onUnmute)?.Invoke();
         }
 
         private void StopDelayed(AudioPoolItem poolItem)
