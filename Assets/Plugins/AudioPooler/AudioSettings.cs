@@ -21,7 +21,7 @@ namespace Plugins.AudioPooler
         [Range(-1f, 1f)] public float stereoPan;
         [Range(0f, 1f)] public float spatialBlend;
         [Range(0f, 1.1f)] public float reverbZoneMix = 1f;
-        public bool linkOnPlay;
+        public bool linkOnPlay = true;
         public LinkerData linkerData;
         public Vector3 playPosition;
         public Audio3DSettings _audio3DSettings;

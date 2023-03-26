@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Plugins.ObjectPooler.Extensions;
 using UnityEngine;
@@ -14,6 +15,11 @@ namespace Plugins.AudioPooler.Linker
 
         public bool IsLinking => _isLinking;
 
+        public event Action onStartedUpdating;
+        public event Action onStoppedUpdating;
+
+        #region Core
+
         public void StartUpdating(LinkerData data)
         {
             if (_linkCoroutine != null) return;
@@ -26,6 +32,7 @@ namespace Plugins.AudioPooler.Linker
             }
 
             _linkCoroutine = StartCoroutine(LinkRoutine());
+            onStartedUpdating?.Invoke();
             _isLinking = true;
         }
 
@@ -39,32 +46,10 @@ namespace Plugins.AudioPooler.Linker
 
                 _data = null;
 
+                onStoppedUpdating?.Invoke();
                 _isLinking = false;
             }
         }
-
-        #region MonoBehaviour
-
-        private void OnDisable()
-        {
-            StopUpdating();
-        }
-
-        #endregion
-
-        #region DataValidation
-
-        private bool IsDataValid()
-        {
-            if (_data == null || _data.linkTo == null || _data.axes.Is01() == false)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        #endregion
 
         private IEnumerator LinkRoutine()
         {
@@ -98,5 +83,21 @@ namespace Plugins.AudioPooler.Linker
         {
             transform.position = transform.position.ReplaceWithAxes(_data.axes, _data.linkTo.position + _data.offset);
         }
+
+        #endregion
+
+        #region DataValidation
+
+        private bool IsDataValid()
+        {
+            if (_data == null || _data.linkTo == null || _data.axes.Is01() == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }
