@@ -62,19 +62,19 @@ namespace Plugins.AudioPooler
 
             for (int i = 0; i < _initialSize; i++)
             {
-                RegisterNewPoolItem();
+                AddNewPoolItem();
             }
         }
 
-        private AudioPoolItem RegisterNewPoolItem()
+        private AudioPoolItem AddNewPoolItem()
         {
             AudioPoolItem poolItem = CreatePoolItem(_defaultSettings);
-            RegisterPoolItem(poolItem);
+            AddPoolItem(poolItem);
 
             return poolItem;
         }
 
-        private void RegisterPoolItem(AudioPoolItem poolItem)
+        private void AddPoolItem(AudioPoolItem poolItem)
         {
             _pool.Add(poolItem);
             _inactivePool.Add(poolItem);
@@ -428,7 +428,7 @@ namespace Plugins.AudioPooler
 
             if (CanExpand())
             {
-                return RegisterNewPoolItem();
+                return AddNewPoolItem();
             }
 
             AudioPoolItem poolItem = GetLeastImportant();
