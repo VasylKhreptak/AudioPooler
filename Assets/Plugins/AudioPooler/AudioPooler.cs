@@ -338,6 +338,14 @@ namespace Plugins.AudioPooler
             }
         }
 
+        public void SetPosition(int ID, Vector3 worldPosition)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.transform.position = worldPosition;
+            }
+        }
+
         #endregion
 
         #region Core
