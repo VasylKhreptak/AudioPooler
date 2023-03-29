@@ -2,6 +2,7 @@ using System;
 using Plugins.AudioPooler.Linker;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace Plugins.AudioPooler
 {
@@ -19,11 +20,11 @@ namespace Plugins.AudioPooler
         [Range(0f, 1f)] public float volume = 1f;
         [Range(-3f, 3f)] public float pitch = 1f;
         [Range(-1f, 1f)] public float stereoPan;
-        [Range(0f, 1f)] public float spatialBlend;
+        [Range(0f, 1f)] public float spatialBlend = 1f;
         [Range(0f, 1.1f)] public float reverbZoneMix = 1f;
         public bool linkOnPlay = true;
         public LinkerData linkerData;
         public Vector3 playPosition;
-        public Audio3DSettings _audio3DSettings;
+        public Audio3DSettings audio3DSettings;
     }
 }

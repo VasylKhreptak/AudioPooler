@@ -118,7 +118,7 @@ namespace Plugins.AudioPooler
             poolItem.audioSource.spatialBlend = settings.spatialBlend;
             poolItem.audioSource.reverbZoneMix = settings.reverbZoneMix;
 
-            Apply3DSettings(poolItem, settings._audio3DSettings);
+            Apply3DSettings(poolItem, settings.audio3DSettings);
         }
 
         private void Apply3DSettings(AudioPoolItem poolItem, Audio3DSettings settings)
