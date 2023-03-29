@@ -2,7 +2,6 @@ using System;
 using Plugins.AudioPooler.Linker;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Serialization;
 
 namespace Plugins.AudioPooler
 {
