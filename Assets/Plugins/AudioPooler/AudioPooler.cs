@@ -28,6 +28,8 @@ namespace Plugins.AudioPooler
 
         private int CollectionCapacity => _allocateMaxMemory ? _maxSize : _initialSize;
 
+        private Transform _audioListenerTransform;
+
         #region MonoBehaviour
 
         private void OnValidate()
@@ -40,6 +42,8 @@ namespace Plugins.AudioPooler
         private void Awake()
         {
             _defaultSettings = new AudioSettings();
+
+            SetAudioListener(FindObjectOfType<AudioListener>());
 
             InitPool();
         }
@@ -189,6 +193,8 @@ namespace Plugins.AudioPooler
 
         public int Play(AudioSettings settings)
         {
+            if (CanPlay(settings) == false) return -1;
+
             AudioPoolItem poolItem = GetPoolItem();
 
             poolItem.ID = _idGiver++;
@@ -355,10 +361,38 @@ namespace Plugins.AudioPooler
             return null;
         }
 
+        public void SetAudioListener(AudioListener listener)
+        {
+            _audioListenerTransform = listener.transform;
+        }
+
         #endregion
 
         #region Core
 
+        private bool CanPlay(AudioSettings settings)
+        {
+            return IsPlayVolumeRelevant(settings);
+        }
+
+        private bool IsPlayVolumeRelevant(AudioSettings settings)
+        {
+            if (settings.suspendOnLowVolume == false) return true;
+
+            if (Mathf.Approximately(settings.volume, 0f)) return false;
+
+            if (Mathf.Approximately(settings.spatialBlend, 1f) == false) return true;
+
+            float distance = Vector3.Distance(_audioListenerTransform.position, settings.playPosition);
+
+            if (settings.audio3DSettings.rolloffMode == AudioRolloffMode.Linear)
+            {
+                return distance <= settings.audio3DSettings.maxDistance;
+            }
+
+            return true;
+        }
+        
         private void Play(AudioPoolItem poolItem)
         {
             poolItem.audioSource.Play();
@@ -414,10 +448,7 @@ namespace Plugins.AudioPooler
         private void StopDelayed(AudioPoolItem poolItem)
         {
             poolItem.waitTween.Kill();
-            poolItem.waitTween = this.DOWait(poolItem.audioSource.clip.length).OnComplete(() =>
-            {
-                Stop(poolItem);
-            });
+            poolItem.waitTween = this.DOWait(poolItem.audioSource.clip.length).OnComplete(() => Stop(poolItem));
         }
 
         private AudioPoolItem GetPoolItem()
