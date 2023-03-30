@@ -658,6 +658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 730794656}
+  _volumeAmplifier: 1
   _initialSize: 10
   _autoExpand: 1
   _maxSize: 50
@@ -1361,7 +1362,7 @@ MonoBehaviour:
     loop: 0
     suspendOnLowVolume: 1
     priority: 128
-    volume: 1
+    volume: 0.602
     pitch: 1
     stereoPan: 0
     spatialBlend: 1

@@ -12,6 +12,9 @@ namespace Plugins.AudioPooler
         [Header("References")]
         [SerializeField] private Transform _transform;
 
+        [Header("Preferences")]
+        [SerializeField, Min(0)] private float _volumeAmplifier = 1f;
+
         [Header("Pool Preference")]
         [SerializeField] private int _initialSize;
         [SerializeField] private bool _autoExpand;
@@ -117,7 +120,7 @@ namespace Plugins.AudioPooler
             poolItem.audioSource.bypassReverbZones = settings.bypassReverbZones;
             poolItem.audioSource.loop = settings.loop;
             poolItem.audioSource.priority = settings.priority;
-            poolItem.audioSource.volume = settings.volume;
+            poolItem.audioSource.volume = settings.volume * _volumeAmplifier;
             poolItem.audioSource.pitch = settings.pitch;
             poolItem.audioSource.panStereo = settings.stereoPan;
             poolItem.audioSource.spatialBlend = settings.spatialBlend;
@@ -268,7 +271,7 @@ namespace Plugins.AudioPooler
         {
             if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
             {
-                poolItem.audioSource.volume = volume;
+                poolItem.audioSource.volume = volume * _volumeAmplifier;
             }
         }
 
