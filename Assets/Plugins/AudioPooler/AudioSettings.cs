@@ -16,6 +16,7 @@ namespace Plugins.AudioPooler
         public bool bypassListenerEffects;
         public bool bypassReverbZones;
         public bool loop;
+        [Tooltip("If the start volume is too low, the audio will not start. Works only if SpatialBlend = 1 and RolloffMode = Linear")]
         public bool suspendOnLowVolume = true;
         [Range(0, 256)] public int priority = 128;
         [Range(0f, 1f)] public float volume = 1f;

@@ -130,7 +130,7 @@ namespace Plugins.AudioPooler
         {
             poolItem.audioSource.dopplerLevel = settings.dopplerLevel;
             poolItem.audioSource.spread = settings.spread;
-            poolItem.audioSource.rolloffMode = settings.rolloffMode;
+            poolItem.audioSource.rolloffMode = settings.rolloffMode == RolloffMode.Linear ? AudioRolloffMode.Linear : AudioRolloffMode.Logarithmic;
             poolItem.audioSource.minDistance = settings.minDistance;
             poolItem.audioSource.maxDistance = settings.maxDistance;
         }
@@ -385,14 +385,14 @@ namespace Plugins.AudioPooler
 
             float distance = Vector3.Distance(_audioListenerTransform.position, settings.playPosition);
 
-            if (settings.audio3DSettings.rolloffMode == AudioRolloffMode.Linear)
+            if (settings.audio3DSettings.rolloffMode == RolloffMode.Linear)
             {
                 return distance <= settings.audio3DSettings.maxDistance;
             }
 
             return true;
         }
-        
+
         private void Play(AudioPoolItem poolItem)
         {
             poolItem.audioSource.Play();

@@ -1377,7 +1377,7 @@ MonoBehaviour:
       spread: 0
       rolloffMode: 0
       minDistance: 20
-      maxDistance: 50
+      maxDistance: 500
 --- !u!1 &2089725802
 GameObject:
   m_ObjectHideFlags: 0
