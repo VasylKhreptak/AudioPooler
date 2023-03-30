@@ -24,6 +24,6 @@ namespace Plugins.AudioPooler
         public bool linkOnPlay = true;
         public LinkerData linkerData;
         public Vector3 playPosition;
-        public Audio3DSettings audio3DSettings;
+        public Audio3DSettings audio3DSettings = new Audio3DSettings();
     }
 }

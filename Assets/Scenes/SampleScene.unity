@@ -190,10 +190,10 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       axes: {x: 1, y: 1, z: 1}
     playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
+    audio3DSettings:
       dopplerLevel: 1
       spread: 0
-      rolloffMode: 0
+      rolloffMode: 1
       minDistance: 1
       maxDistance: 500
 --- !u!1 &379890995
@@ -261,10 +261,10 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       axes: {x: 1, y: 1, z: 1}
     playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
+    audio3DSettings:
       dopplerLevel: 1
       spread: 0
-      rolloffMode: 0
+      rolloffMode: 1
       minDistance: 1
       maxDistance: 500
   _ease: 1
@@ -427,7 +427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &727569561
 Transform:
   m_ObjectHideFlags: 0
@@ -476,10 +476,10 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       axes: {x: 1, y: 1, z: 1}
     playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
+    audio3DSettings:
       dopplerLevel: 1
       spread: 0
-      rolloffMode: 0
+      rolloffMode: 1
       minDistance: 1
       maxDistance: 500
 --- !u!1 &730794655
@@ -531,32 +531,6 @@ MonoBehaviour:
   _autoExpand: 1
   _maxSize: 50
   _allocateMaxMemory: 0
-  _defaultSettings:
-    clip: {fileID: 8300000, guid: fa268c20d59683f4ea7b1be3c55f9e97, type: 3}
-    audioMixerGroup: {fileID: 0}
-    mute: 0
-    bypassEffects: 0
-    bypassListenerEffects: 0
-    bypassReverbZones: 0
-    loop: 0
-    priority: 128
-    volume: 1
-    pitch: 1
-    stereoPan: 0
-    spatialBlend: 0
-    reverbZoneMix: 1
-    linkOnPlay: 0
-    linkerData:
-      linkTo: {fileID: 0}
-      offset: {x: 0, y: 0, z: 0}
-      axes: {x: 1, y: 1, z: 1}
-    playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
-      dopplerLevel: 1
-      spread: 0
-      rolloffMode: 0
-      minDistance: 1
-      maxDistance: 500
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,10 +879,10 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       axes: {x: 1, y: 1, z: 1}
     playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
+    audio3DSettings:
       dopplerLevel: 1
       spread: 0
-      rolloffMode: 0
+      rolloffMode: 1
       minDistance: 1
       maxDistance: 500
 --- !u!1 &1611005626
@@ -962,12 +936,12 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       axes: {x: 1, y: 1, z: 1}
     playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
+    audio3DSettings:
       dopplerLevel: 1
       spread: 0
       rolloffMode: 1
       minDistance: 1
-      maxDistance: 50
+      maxDistance: 500
 --- !u!4 &1611005628
 Transform:
   m_ObjectHideFlags: 0
@@ -1048,10 +1022,10 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       axes: {x: 1, y: 1, z: 1}
     playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
+    audio3DSettings:
       dopplerLevel: 1
       spread: 0
-      rolloffMode: 0
+      rolloffMode: 1
       minDistance: 1
       maxDistance: 500
   _stop: 32
@@ -1168,7 +1142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1841690605
 Transform:
   m_ObjectHideFlags: 0
@@ -1218,7 +1192,7 @@ MonoBehaviour:
       offset: {x: 0, y: 0, z: 0}
       axes: {x: 1, y: 1, z: 1}
     playPosition: {x: 0, y: 0, z: 0}
-    _audio3DSettings:
+    audio3DSettings:
       dopplerLevel: 1
       spread: 0
       rolloffMode: 1

@@ -18,8 +18,7 @@ namespace Plugins.AudioPooler
         [SerializeField] private int _maxSize;
         [SerializeField] private bool _allocateMaxMemory;
 
-        [Space]
-        [SerializeField] private AudioSettings _defaultSettings;
+        private AudioSettings _defaultSettings;
 
         private HashSet<AudioPoolItem> _pool;
         private Dictionary<int, AudioPoolItem> _activePool;
@@ -40,7 +39,9 @@ namespace Plugins.AudioPooler
 
         private void Awake()
         {
-            Init();
+            _defaultSettings = new AudioSettings();
+
+            InitPool();
         }
 
         private void OnDestroy()
@@ -52,7 +53,7 @@ namespace Plugins.AudioPooler
 
         #region Init
 
-        private void Init()
+        private void InitPool()
         {
             int collectionCapacity = CollectionCapacity;
 
