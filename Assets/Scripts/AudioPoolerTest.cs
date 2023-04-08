@@ -1,5 +1,7 @@
 using Plugins.AudioPooler;
+using Plugins.AudioPooler.Core;
 using UnityEngine;
+using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
 public class AudioPoolerTest : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class AudioPoolerTest : MonoBehaviour
     [Header("Preferences")]
     [SerializeField] private int _mouseKeyIndex;
     [Space]
-    [SerializeField] private Plugins.AudioPooler.AudioSettings _settings;
+    [SerializeField] private AudioSettings _settings;
 
     private Camera _camera;
 

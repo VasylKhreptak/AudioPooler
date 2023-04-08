@@ -1,4 +1,5 @@
 using Plugins.AudioPooler;
+using Plugins.AudioPooler.Core;
 using UnityEngine;
 
 public class MuteAllTest : MonoBehaviour

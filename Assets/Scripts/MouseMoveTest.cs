@@ -1,7 +1,8 @@
 using System.Collections;
 using Plugins.AudioPooler;
+using Plugins.AudioPooler.Core;
 using UnityEngine;
-using AudioSettings = Plugins.AudioPooler.AudioSettings;
+using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
 public class MouseMoveTest : MonoBehaviour
 {
