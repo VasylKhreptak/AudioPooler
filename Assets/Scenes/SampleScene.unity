@@ -255,7 +255,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     stereoPan: 0
-    spatialBlend: 1
+    spatialBlend: 0
     reverbZoneMix: 1
     linkOnPlay: 0
     linkerData:
@@ -266,7 +266,7 @@ MonoBehaviour:
     audio3DSettings:
       dopplerLevel: 1
       spread: 0
-      rolloffMode: 1
+      rolloffMode: 0
       minDistance: 1
       maxDistance: 50
   _stopOnComplete: 1
@@ -414,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &505112810
 Transform:
   m_ObjectHideFlags: 0

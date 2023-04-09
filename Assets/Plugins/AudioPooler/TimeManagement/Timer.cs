@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,13 +11,16 @@ namespace Plugins.AudioPooler.TimeManagement
 
         private bool _isPaused;
 
+        private float _duration;
+
         #region Interface
 
         public void Start(float duration, System.Action callback)
         {
             if (_coroutine == null)
             {
-                _coroutine = CoroutineHandler.Instance.StartCoroutine(TimerRoutine(duration, callback));
+                _duration = duration;
+                _coroutine = CoroutineHandler.Instance.StartCoroutine(TimerRoutine(callback));
             }
         }
 
@@ -41,21 +45,23 @@ namespace Plugins.AudioPooler.TimeManagement
 
         public void TogglePause() => _isPaused = !_isPaused;
 
+        public void UpdateDuration(float duration) => _duration = duration;
+
         #endregion
 
-        private IEnumerator TimerRoutine(float duration, System.Action callback)
+        private IEnumerator TimerRoutine(System.Action callback)
         {
             float time = 0;
-            while (time < duration)
+            while (time < _duration)
             {
                 if (_isPaused == false)
                 {
                     time += Time.deltaTime;
                 }
-                
+
                 yield return null;
             }
-            
+
             _coroutine = null;
             callback?.Invoke();
         }

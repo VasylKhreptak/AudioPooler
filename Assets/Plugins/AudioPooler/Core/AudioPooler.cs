@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Plugins.AudioPooler.Data;
 using Plugins.AudioPooler.Enums;
+using Plugins.AudioPooler.Extensions;
 using Plugins.AudioPooler.Linker;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
@@ -33,6 +34,8 @@ namespace Plugins.AudioPooler.Core
         private int CollectionCapacity => _allocateMaxMemory ? _maxSize : _initialSize;
 
         private Transform _audioListenerTransform;
+
+        private const float MIN_PITCH = 0.1f;
 
         #region MonoBehaviour
 
@@ -122,7 +125,7 @@ namespace Plugins.AudioPooler.Core
             poolItem.audioSource.loop = settings.loop;
             poolItem.audioSource.priority = settings.priority;
             poolItem.audioSource.volume = settings.volume * _volumeAmplifier;
-            poolItem.audioSource.pitch = settings.pitch;
+            poolItem.audioSource.pitch = ClampPitch(settings.pitch);
             poolItem.audioSource.panStereo = settings.stereoPan;
             poolItem.audioSource.spatialBlend = settings.spatialBlend;
             poolItem.audioSource.reverbZoneMix = settings.reverbZoneMix;
@@ -246,16 +249,6 @@ namespace Plugins.AudioPooler.Core
             {
                 Stop(poolItem);
             }
-        }
-
-        public AudioSource GetAudioSource(int ID)
-        {
-            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
-            {
-                return poolItem.audioSource;
-            }
-
-            return null;
         }
 
         public bool IsPlaying(int ID)
@@ -458,7 +451,7 @@ namespace Plugins.AudioPooler.Core
 
         private void StopDelayed(AudioPoolItem poolItem)
         {
-            poolItem.timer.Restart(poolItem.audioSource.clip.length, () => Stop(poolItem));
+            poolItem.timer.Restart(GetDuration(poolItem.audioSource), () => Stop(poolItem));
         }
 
         private AudioPoolItem GetPoolItem()
@@ -501,6 +494,24 @@ namespace Plugins.AudioPooler.Core
             }
 
             return leastImportant;
+        }
+
+        private float GetDurationByPitch(float normalDuration, float pitch)
+        {
+            float clampedPitch = Mathf.Clamp(Mathf.Abs(pitch), MIN_PITCH, 3f);
+            return normalDuration / clampedPitch;
+        }
+
+        private float GetDuration(AudioSource source)
+        {
+            return GetDurationByPitch(source.clip.length, source.pitch);
+        }
+
+        private float ClampPitch(float pitch)
+        {
+            float pitchSign = Mathf.Sign(pitch);
+            float absolutePitch = Mathf.Abs(pitch);
+            return Mathf.Clamp(absolutePitch, MIN_PITCH, 3f) * pitchSign;
         }
 
         #endregion
