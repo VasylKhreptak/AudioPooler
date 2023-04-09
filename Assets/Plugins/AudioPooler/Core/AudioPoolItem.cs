@@ -1,9 +1,7 @@
 using System;
-using JetBrains.Annotations;
 using Plugins.AudioPooler.Linker;
 using Plugins.AudioPooler.TimeManagement;
 using Plugins.AudioPooler.Tweening;
-using Plugins.AudioPooler.Tweening.Core;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
@@ -15,7 +13,7 @@ namespace Plugins.AudioPooler.Core
         public AudioSettings settings;
         public PositionLinker linker;
         public readonly Timer timer = new Timer();
-        
+
         public bool isPaused;
         public int ID = -1;
 
@@ -51,7 +49,8 @@ namespace Plugins.AudioPooler.Core
 
         private void OnDisable()
         {
-            KillTweens();
+            timer.Stop();
+            StopTweens();
             isPaused = false;
 
             onDisable?.Invoke(this);
@@ -59,10 +58,16 @@ namespace Plugins.AudioPooler.Core
 
         #endregion
 
-        private void KillTweens()
+        public void StopTweens()
         {
-            timer.Stop();
             volumeTween.Stop();
+            pitchTween.Stop();
+            spatialBlendTween.Stop();
+            stereoPanTween.Stop();
+            reverbZoneMixTween.Stop();
+            spreadTween.Stop();
+            minDistanceTween.Stop();
+            maxDistanceTween.Stop();
         }
     }
 }

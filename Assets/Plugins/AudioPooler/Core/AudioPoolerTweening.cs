@@ -1,4 +1,6 @@
+using Plugins.AudioPooler.Tweening;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Plugins.AudioPooler.Core
 {
@@ -35,7 +37,7 @@ namespace Plugins.AudioPooler.Core
                     .Setter(x =>
                     {
                         poolItem.audioSource.pitch = x;
-                        poolItem.timer.UpdateDuration(GetDuration(poolItem.audioSource));
+                        poolItem.timer.UpdateDuration(GetDurationByPitch(poolItem.audioSource));
                     })
                     .To(pitch)
                     .Duration(time)
@@ -159,6 +161,89 @@ namespace Plugins.AudioPooler.Core
                         if (stopOnComplete) Stop(poolItem);
                     })
                     .Play();
+            }
+        }
+
+        public void SetParameterSmooth(AudioMixer mixer, string name, float value, float time, AnimationCurve curve = null)
+        {
+            if (_parameterTweens.TryGetValue(name, out FloatTween floatTween))
+            {
+                floatTween
+                    .Reset()
+                    .Getter(() =>
+                    {
+                        mixer.GetFloat(name, out var x);
+                        return x;
+                    })
+                    .Setter(x => mixer.SetFloat(name, x))
+                    .To(value)
+                    .Duration(time)
+                    .Curve(curve)
+                    .Play();
+            }
+            else
+            {
+                _parameterTweens.Add(name, new FloatTween());
+                SetParameterSmooth(mixer, name, value, time, curve);
+            }
+        }
+
+        public void SetTrackVolume01Smooth(AudioMixer mixer, string name, float volume01, float time, AnimationCurve curve = null)
+        {
+            if (_parameterTweens.TryGetValue(name, out FloatTween floatTween))
+            {
+                floatTween
+                    .Reset()
+                    .Getter(() =>
+                    {
+                        mixer.GetFloat(name, out var x);
+                        return FromDbTo01(x);
+                    })
+                    .Setter(x => mixer.SetFloat(name, From01ToDb(x)))
+                    .To(volume01)
+                    .Duration(time)
+                    .Curve(curve)
+                    .Play();
+            }
+            else
+            {
+                _parameterTweens.Add(name, new FloatTween());
+                SetTrackVolume01Smooth(mixer, name, volume01, time, curve);
+            }
+        }
+
+        public void SetTrackVolumeDbSmooth(AudioMixer mixer, string name, float volumeDb, float time, AnimationCurve curve = null)
+        {
+            SetParameterSmooth(mixer, name, volumeDb, time, curve);
+        }
+
+        public void SetTrackPitchSmooth(AudioMixer mixer, string name, float pitch, float time, AnimationCurve curve = null)
+        {
+            if (_parameterTweens.TryGetValue(name, out FloatTween floatTween))
+            {
+                pitch = Mathf.Max(0.01f, pitch);
+
+                floatTween
+                    .Reset()
+                    .Getter(() =>
+                    {
+                        mixer.GetFloat(name, out var x);
+                        return x;
+                    })
+                    .Setter(x =>
+                    {
+                        mixer.SetFloat(name, x);
+                        UpdateAudiosDuration();
+                    })
+                    .To(pitch)
+                    .Duration(time)
+                    .Curve(curve)
+                    .Play();
+            }
+            else
+            {
+                _parameterTweens.Add(name, new FloatTween());
+                SetTrackPitchSmooth(mixer, name, pitch, time, curve);
             }
         }
     }

@@ -1,5 +1,7 @@
 using System.Linq;
+using Plugins.AudioPooler.Tweening;
 using UnityEngine;
+using UnityEngine.Audio;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
 
@@ -59,7 +61,7 @@ namespace Plugins.AudioPooler.Core
                 Stop(poolItem);
             }
         }
-        
+
         public bool IsPlaying(int ID)
         {
             if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
@@ -120,7 +122,7 @@ namespace Plugins.AudioPooler.Core
             if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
             {
                 poolItem.audioSource.pitch = ClampPitch(pitch);
-                poolItem.timer.UpdateDuration(GetDuration(poolItem.audioSource));
+                poolItem.timer.UpdateDuration(GetDurationByPitch(poolItem.audioSource));
             }
         }
 
@@ -228,8 +230,6 @@ namespace Plugins.AudioPooler.Core
             }
         }
 
-      
-
         public void StopUpdatingMaxDistance(int ID)
         {
             if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
@@ -315,6 +315,72 @@ namespace Plugins.AudioPooler.Core
         public void SetAudioListener(AudioListener listener)
         {
             _audioListenerTransform = listener.transform;
+        }
+
+        public float From01ToDb(float volume01)
+        {
+            volume01 = Mathf.Max(0.0001f, volume01);
+
+            return 20f * Mathf.Log10(volume01);
+        }
+
+        public float FromDbTo01(float volumeDb)
+        {
+            return Mathf.Pow(10f, volumeDb / 20f);
+        }
+
+        public void SetTrackVolumeDb(AudioMixer mixer, string name, float volumeDb)
+        {
+            SetParameter(mixer, name, volumeDb);
+        }
+
+        public void SetTrackVolume01(AudioMixer mixer, string name, float volume01)
+        {
+            SetTrackVolumeDb(mixer, name, From01ToDb(volume01));
+        }
+
+        public void SetParameter(AudioMixer mixer, string name, float value)
+        {
+            mixer.SetFloat(name, value);
+        }
+
+        public void StopUpdatingParameter(string name)
+        {
+            if (_parameterTweens.TryGetValue(name, out FloatTween tween))
+            {
+                tween.Stop();
+            }
+        }
+
+        public void PauseUpdatingParameter(string name)
+        {
+            if (_parameterTweens.TryGetValue(name, out FloatTween tween))
+            {
+                tween.Pause();
+            }
+        }
+
+        public void ResumeUpdatingParameter(string name)
+        {
+            if (_parameterTweens.TryGetValue(name, out FloatTween tween))
+            {
+                tween.Resume();
+            }
+        }
+
+        public void TogglePauseUpdatingParameter(string name)
+        {
+            if (_parameterTweens.TryGetValue(name, out FloatTween tween))
+            {
+                tween.TogglePause();
+            }
+        }
+
+        public void SetTrackPitch(AudioMixer mixer, string name, float pitch)
+        {
+            pitch = Mathf.Max(0.01f, pitch);
+            mixer.SetFloat(name, pitch);
+            UpdateAudiosDuration();
         }
     }
 }

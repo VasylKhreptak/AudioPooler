@@ -6,7 +6,7 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NewAudioMixer
+  m_Name: AudioMixer
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -15,7 +15,11 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 430c0ee2cd8ab414f869f1b71e5cc46c
+    name: Volume
+  - guid: 19735d8672f2a7d49a5f229cbf0e7f0f
+    name: PitchMaster
   m_AudioMixerGroupViews:
   - guids:
     - df08504190b4d154893cf20ca7b3fff0
@@ -64,5 +68,9 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: b25dbd6b0ae05f447be96f528740215b
-  m_FloatValues: {}
+  m_FloatValues:
+    979d71c2255937b469288490655b0017: 2090.7163
+    430c0ee2cd8ab414f869f1b71e5cc46c: 0
+    19735d8672f2a7d49a5f229cbf0e7f0f: 1
+    556f8eca97e2fc8469b6a7b8b6a0c6a3: 1.1899997
   m_TransitionOverrides: {}

@@ -3,6 +3,7 @@ using System.Linq;
 using Plugins.AudioPooler.Data;
 using Plugins.AudioPooler.Enums;
 using Plugins.AudioPooler.Linker;
+using Plugins.AudioPooler.Tweening;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
@@ -28,13 +29,15 @@ namespace Plugins.AudioPooler.Core
         private Dictionary<int, AudioPoolItem> _activePool;
         private HashSet<AudioPoolItem> _inactivePool;
 
+        private readonly Dictionary<string, FloatTween> _parameterTweens = new Dictionary<string, FloatTween>();
+
         private int _idGiver;
 
         private int CollectionCapacity => _allocateMaxMemory ? _maxSize : _initialSize;
 
         private Transform _audioListenerTransform;
 
-        private const float MIN_PITCH = 0.1f;
+        private const float MIN_PITCH = 0.05f;
 
         #region MonoBehaviour
 
@@ -232,7 +235,7 @@ namespace Plugins.AudioPooler.Core
             if (poolItem.gameObject.activeSelf == false) return;
 
             poolItem.timer.Stop();
-            poolItem.volumeTween.Stop();
+            StopTweens(poolItem);
             poolItem.audioSource.Stop();
             poolItem.linker.StopUpdating();
             poolItem.onStop?.Invoke();
@@ -245,7 +248,7 @@ namespace Plugins.AudioPooler.Core
             if (poolItem.isPaused) return;
 
             poolItem.timer.Pause();
-            poolItem.volumeTween.Pause();
+            PauseTweens(poolItem);
             poolItem.audioSource.Pause();
             poolItem.onPause?.Invoke();
             poolItem.isPaused = true;
@@ -261,7 +264,7 @@ namespace Plugins.AudioPooler.Core
             }
 
             poolItem.audioSource.Play();
-            poolItem.volumeTween.Resume();
+            ResumeTweens(poolItem);
             poolItem.onResume?.Invoke();
             poolItem.isPaused = false;
         }
@@ -277,7 +280,7 @@ namespace Plugins.AudioPooler.Core
 
         private void StopDelayed(AudioPoolItem poolItem)
         {
-            poolItem.timer.Restart(GetDuration(poolItem.audioSource), () => Stop(poolItem));
+            poolItem.timer.Restart(GetDurationByPitch(poolItem.audioSource), () => Stop(poolItem));
         }
 
         private AudioPoolItem GetPoolItem()
@@ -322,22 +325,70 @@ namespace Plugins.AudioPooler.Core
             return leastImportant;
         }
 
-        private float GetDurationByPitch(float normalDuration, float pitch)
+        private float GetDurationByPitch(AudioSource source)
         {
-            float clampedPitch = Mathf.Clamp(Mathf.Abs(pitch), MIN_PITCH, 3f);
-            return normalDuration / clampedPitch;
+            float normalDuration = source.clip.length;
+            float sourcePitch = source.pitch;
+
+            bool isMixerPitchSet = false;
+            float mixerPitch = 0f;
+            if (source.outputAudioMixerGroup != null)
+            {
+                isMixerPitchSet = source.outputAudioMixerGroup.audioMixer.GetFloat("Pitch" + source.outputAudioMixerGroup.name, out mixerPitch);
+            }
+
+            return normalDuration / Mathf.Abs(ClampPitch(sourcePitch * (isMixerPitchSet ? mixerPitch : 1)));
         }
 
-        private float GetDuration(AudioSource source)
+        private void UpdateDuration(AudioPoolItem poolItem)
         {
-            return GetDurationByPitch(source.clip.length, source.pitch);
+            if (poolItem.settings.loop) return;
+
+            poolItem.timer.UpdateDuration(GetDurationByPitch(poolItem.audioSource));
         }
 
         private float ClampPitch(float pitch)
         {
             float pitchSign = Mathf.Sign(pitch);
             float absolutePitch = Mathf.Abs(pitch);
-            return Mathf.Clamp(absolutePitch, MIN_PITCH, 3f) * pitchSign;
+            return Mathf.Max(MIN_PITCH, absolutePitch) * pitchSign;
+        }
+
+        private void UpdateAudiosDuration()
+        {
+            foreach (var KVP in _activePool.ToArray())
+            {
+                UpdateDuration(KVP.Value);
+            }
+        }
+
+        private void StopTweens(AudioPoolItem poolItem)
+        {
+            poolItem.StopTweens();
+        }
+
+        private void PauseTweens(AudioPoolItem poolItem)
+        {
+            poolItem.volumeTween.Pause();
+            poolItem.pitchTween.Pause();
+            poolItem.spatialBlendTween.Pause();
+            poolItem.stereoPanTween.Pause();
+            poolItem.reverbZoneMixTween.Pause();
+            poolItem.spreadTween.Pause();
+            poolItem.minDistanceTween.Pause();
+            poolItem.maxDistanceTween.Pause();
+        }
+
+        private void ResumeTweens(AudioPoolItem poolItem)
+        {
+            poolItem.volumeTween.Resume();
+            poolItem.pitchTween.Resume();
+            poolItem.spatialBlendTween.Resume();
+            poolItem.stereoPanTween.Resume();
+            poolItem.reverbZoneMixTween.Resume();
+            poolItem.spreadTween.Resume();
+            poolItem.minDistanceTween.Resume();
+            poolItem.maxDistanceTween.Resume();
         }
 
         #endregion
