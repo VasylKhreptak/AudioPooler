@@ -4,7 +4,7 @@ using UnityEngine;
 public class SetStereoPanSmoothTest : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private AudioPooler _audioPooler;
+    [SerializeField] private Plugins.AudioPooler.Core.AudioPooler _audioPooler;
 
     [Header("Preferences")]
     [SerializeField] private Plugins.AudioPooler.Data.AudioSettings _settings;
@@ -18,7 +18,7 @@ public class SetStereoPanSmoothTest : MonoBehaviour
 
     private void OnValidate()
     {
-        _audioPooler ??= FindObjectOfType<AudioPooler>();
+        _audioPooler ??= FindObjectOfType<Plugins.AudioPooler.Core.AudioPooler>();
     }
 
     private void Update()

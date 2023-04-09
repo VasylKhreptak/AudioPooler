@@ -8,7 +8,7 @@ public class MassivePlayTest : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform _transform;
-    [SerializeField] private AudioPooler _audioPooler;
+    [SerializeField] private Plugins.AudioPooler.Core.AudioPooler _audioPooler;
 
     [Header("Preferences")]
     [SerializeField] private KeyCode _start = KeyCode.F1;
@@ -25,7 +25,7 @@ public class MassivePlayTest : MonoBehaviour
 
     private void OnValidate()
     {
-        _audioPooler ??= FindObjectOfType<AudioPooler>();
+        _audioPooler ??= FindObjectOfType<Plugins.AudioPooler.Core.AudioPooler>();
     }
 
     private void Update()

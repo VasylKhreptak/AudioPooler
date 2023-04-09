@@ -7,7 +7,7 @@ using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 public class MouseMoveTest : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private AudioPooler _audioPooler;
+    [SerializeField] private Plugins.AudioPooler.Core.AudioPooler _audioPooler;
 
     [Space]
     [SerializeField] private AudioSettings _settings;
@@ -22,7 +22,7 @@ public class MouseMoveTest : MonoBehaviour
 
     private void OnValidate()
     {
-        _audioPooler ??= FindObjectOfType<AudioPooler>();
+        _audioPooler ??= FindObjectOfType<Plugins.AudioPooler.Core.AudioPooler>();
     }
 
     private void Awake()

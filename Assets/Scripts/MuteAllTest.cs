@@ -5,7 +5,7 @@ using UnityEngine;
 public class MuteAllTest : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private AudioPooler _audioPooler;
+    [SerializeField] private Plugins.AudioPooler.Core.AudioPooler _audioPooler;
 
     [Header("Preferences")]
     [SerializeField] private KeyCode _muteKeyCode = KeyCode.M;
@@ -13,7 +13,7 @@ public class MuteAllTest : MonoBehaviour
 
     private void OnValidate()
     {
-        _audioPooler ??= FindObjectOfType<AudioPooler>();
+        _audioPooler ??= FindObjectOfType<Plugins.AudioPooler.Core.AudioPooler>();
     }
 
     private void Update()

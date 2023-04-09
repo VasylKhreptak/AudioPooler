@@ -4,7 +4,7 @@ using UnityEngine;
 public class SetPitchSmoothTest : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private AudioPooler _audioPooler;
+    [SerializeField] private Plugins.AudioPooler.Core.AudioPooler _audioPooler;
 
     [Header("Preferences")]
     [SerializeField] private Plugins.AudioPooler.Data.AudioSettings _settings;
@@ -18,7 +18,7 @@ public class SetPitchSmoothTest : MonoBehaviour
 
     private void OnValidate()
     {
-        _audioPooler ??= FindObjectOfType<AudioPooler>();
+        _audioPooler ??= FindObjectOfType<Plugins.AudioPooler.Core.AudioPooler>();
     }
 
     private void Update()
@@ -31,7 +31,7 @@ public class SetPitchSmoothTest : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             _audioPooler.SetPitch(_ID, _from);
-            _audioPooler.SetPitchSmooth(_ID, 0f, 2f, _stopOnComplete);
+            _audioPooler.SetPitchSmooth(_ID, _to, 2f, _stopOnComplete);
         }
         
         if (Input.GetMouseButtonDown(2))
