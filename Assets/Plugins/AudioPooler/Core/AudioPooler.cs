@@ -308,12 +308,12 @@ namespace Plugins.AudioPooler.Core
             AudioPoolItem leastImportant = null;
 
             int lowestPriority = 0;
-            foreach (var keyValuePair in _activePool)
+            foreach (var audioPoolItem in _activePool.Values)
             {
-                if (keyValuePair.Value.settings.priority > lowestPriority)
+                if (audioPoolItem.settings.priority > lowestPriority)
                 {
-                    lowestPriority = keyValuePair.Value.settings.priority;
-                    leastImportant = keyValuePair.Value;
+                    lowestPriority = audioPoolItem.settings.priority;
+                    leastImportant = audioPoolItem;
                 }
             }
 
@@ -356,9 +356,9 @@ namespace Plugins.AudioPooler.Core
 
         private void UpdateAudiosDuration()
         {
-            foreach (var KVP in _activePool.ToArray())
+            foreach (var audioPoolItem in _activePool.Values)
             {
-                UpdateDuration(KVP.Value);
+                UpdateDuration(audioPoolItem);
             }
         }
 

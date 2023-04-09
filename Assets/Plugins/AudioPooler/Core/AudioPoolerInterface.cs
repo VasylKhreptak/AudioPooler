@@ -248,7 +248,7 @@ namespace Plugins.AudioPooler.Core
 
         public void MuteAll(bool mute)
         {
-            foreach (AudioPoolItem poolItem in _activePool.Values.ToArray())
+            foreach (AudioPoolItem poolItem in _activePool.Values)
             {
                 Mute(poolItem, mute);
             }
@@ -264,7 +264,7 @@ namespace Plugins.AudioPooler.Core
 
         public void PauseAll()
         {
-            foreach (AudioPoolItem poolItem in _activePool.Values.ToArray())
+            foreach (AudioPoolItem poolItem in _activePool.Values)
             {
                 Pause(poolItem);
             }
@@ -272,7 +272,7 @@ namespace Plugins.AudioPooler.Core
 
         public void ResumeAll()
         {
-            foreach (AudioPoolItem poolItem in _activePool.Values.ToArray())
+            foreach (AudioPoolItem poolItem in _activePool.Values)
             {
                 Resume(poolItem);
             }
@@ -381,6 +381,30 @@ namespace Plugins.AudioPooler.Core
             pitch = Mathf.Max(0.01f, pitch);
             mixer.SetFloat(name, pitch);
             UpdateAudiosDuration();
+        }
+        
+        public void StopUpdatingParameters()
+        {
+            foreach (FloatTween tween in _parameterTweens.Values)
+            {
+                tween.Stop();
+            }
+        }
+        
+        public void PauseUpdatingParameters()
+        {
+            foreach (FloatTween tween in _parameterTweens.Values)
+            {
+                tween.Pause();
+            }
+        }
+        
+        public void ResumeUpdatingParameters()
+        {
+            foreach (FloatTween tween in _parameterTweens.Values)
+            {
+                tween.Resume();
+            }
         }
     }
 }
