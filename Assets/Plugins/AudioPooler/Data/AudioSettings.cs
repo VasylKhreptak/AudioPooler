@@ -2,6 +2,7 @@ using System;
 using Plugins.AudioPooler.Linker;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace Plugins.AudioPooler.Data
 {
@@ -15,8 +16,9 @@ namespace Plugins.AudioPooler.Data
         public bool bypassListenerEffects;
         public bool bypassReverbZones;
         public bool loop;
-        [Tooltip("If the start volume is too low, the audio will not start. Works only if SpatialBlend = 1 and RolloffMode = Linear")]
-        public bool suspendOnLowVolume = true;
+        [Tooltip("If true, the audio will not be started when the distance between the audio and the listener is greater than the max distance."
+            + "Works only if the spatial blend is 1 and rolloff mode is set to linear.")]
+        public bool suspendOnDistance = true;
         [Range(0, 256)] public int priority = 128;
         [Range(0f, 1f)] public float volume = 1f;
         [Range(-3f, 3f)] public float pitch = 1f;

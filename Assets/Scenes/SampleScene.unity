@@ -178,7 +178,7 @@ MonoBehaviour:
     bypassListenerEffects: 0
     bypassReverbZones: 0
     loop: 0
-    suspendOnLowVolume: 1
+    suspendOnDistance: 1
     priority: 128
     volume: 1
     pitch: 1
@@ -213,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &379890996
 Transform:
   m_ObjectHideFlags: 0
@@ -250,12 +250,12 @@ MonoBehaviour:
     bypassListenerEffects: 0
     bypassReverbZones: 0
     loop: 0
-    suspendOnLowVolume: 1
+    suspendOnDistance: 1
     priority: 128
     volume: 1
     pitch: 1
     stereoPan: 0
-    spatialBlend: 0
+    spatialBlend: 1
     reverbZoneMix: 1
     linkOnPlay: 0
     linkerData:
@@ -268,7 +268,7 @@ MonoBehaviour:
       spread: 0
       rolloffMode: 1
       minDistance: 1
-      maxDistance: 500
+      maxDistance: 50
   _stopOnComplete: 1
 --- !u!1 &503334614
 GameObject:
@@ -593,7 +593,7 @@ MonoBehaviour:
     bypassListenerEffects: 0
     bypassReverbZones: 0
     loop: 1
-    suspendOnLowVolume: 1
+    suspendOnDistance: 1
     priority: 128
     volume: 1
     pitch: 1
@@ -775,7 +775,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.62073046, y: -0, z: -0, w: 0.78402406}
-  m_LocalPosition: {x: 0, y: 3002, z: -710}
+  m_LocalPosition: {x: 0, y: 41.1, z: -7.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -895,7 +895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1174659373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,7 +1016,7 @@ Transform:
   m_GameObject: {fileID: 1222131953}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.2862655, y: 1.18, z: 0.5791414}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1088,7 +1088,7 @@ MonoBehaviour:
     bypassListenerEffects: 0
     bypassReverbZones: 0
     loop: 0
-    suspendOnLowVolume: 1
+    suspendOnDistance: 1
     priority: 128
     volume: 1
     pitch: 1
@@ -1146,7 +1146,7 @@ MonoBehaviour:
     bypassListenerEffects: 0
     bypassReverbZones: 0
     loop: 1
-    suspendOnLowVolume: 1
+    suspendOnDistance: 1
     priority: 127
     volume: 1
     pitch: 1
@@ -1233,7 +1233,7 @@ MonoBehaviour:
     bypassListenerEffects: 0
     bypassReverbZones: 0
     loop: 0
-    suspendOnLowVolume: 1
+    suspendOnDistance: 1
     priority: 128
     volume: 1
     pitch: 1
@@ -1366,7 +1366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1841690605
 Transform:
   m_ObjectHideFlags: 0
@@ -1404,7 +1404,7 @@ MonoBehaviour:
     bypassListenerEffects: 0
     bypassReverbZones: 0
     loop: 0
-    suspendOnLowVolume: 1
+    suspendOnDistance: 1
     priority: 128
     volume: 0.602
     pitch: 1
@@ -1421,8 +1421,8 @@ MonoBehaviour:
       dopplerLevel: 1
       spread: 0
       rolloffMode: 0
-      minDistance: 20
-      maxDistance: 500
+      minDistance: 1
+      maxDistance: 50
 --- !u!1 &2089725802
 GameObject:
   m_ObjectHideFlags: 0

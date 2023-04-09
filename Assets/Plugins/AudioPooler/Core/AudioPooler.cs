@@ -3,7 +3,6 @@ using System.Linq;
 using Plugins.AudioPooler.Data;
 using Plugins.AudioPooler.Enums;
 using Plugins.AudioPooler.Linker;
-using Unity.VisualScripting;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
@@ -386,7 +385,7 @@ namespace Plugins.AudioPooler.Core
 
         private bool IsPlayVolumeRelevant(AudioSettings settings)
         {
-            if (settings.suspendOnLowVolume == false) return true;
+            if (settings.suspendOnDistance == false) return true;
 
             if (Mathf.Approximately(settings.volume, 0f)) return false;
 

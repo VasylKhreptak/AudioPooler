@@ -29,7 +29,7 @@ public class SetVolumeSmoothTest : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            _audioPooler.SetVolumeSmooth(_ID, 0f, 2f, _stopOnComplete, null);
+            _audioPooler.SetVolumeSmooth(_ID, 0f, 2f, _stopOnComplete);
         }
     }
 

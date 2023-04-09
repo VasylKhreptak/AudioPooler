@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Plugins.AudioPooler.Tweening.Core
 {
-    public class Tween
+    public abstract class Tween<T> where T : struct
     {
         private Coroutine _coroutine;
 
@@ -14,10 +14,10 @@ namespace Plugins.AudioPooler.Tweening.Core
 
         #region Settings
 
-        private float? _from;
-        private float _to;
-        private Func<float> _getter;
-        private Action<float> _setter;
+        private T? _from;
+        private T _to;
+        private Func<T> _getter;
+        private Action<T> _setter;
         private float _duration;
         private AnimationCurve _curve;
 
@@ -41,7 +41,7 @@ namespace Plugins.AudioPooler.Tweening.Core
 
         #region Interface
 
-        public Tween Play()
+        public Tween<T> Play()
         {
             if (_coroutine == null)
             {
@@ -52,7 +52,7 @@ namespace Plugins.AudioPooler.Tweening.Core
             return this;
         }
 
-        public Tween Stop()
+        public Tween<T> Stop()
         {
             if (_coroutine != null && SceneManager.GetActiveScene().isLoaded)
             {
@@ -69,72 +69,72 @@ namespace Plugins.AudioPooler.Tweening.Core
             Play();
         }
 
-        public Tween Pause()
+        public Tween<T> Pause()
         {
             _isPaused = true;
             return this;
         }
 
-        public Tween Resume()
+        public Tween<T> Resume()
         {
             _isPaused = false;
             return this;
         }
 
-        public Tween TogglePause()
+        public Tween<T> TogglePause()
         {
             _isPaused = !_isPaused;
             return this;
         }
 
-        public Tween Getter(Func<float> getter)
+        public Tween<T> Getter(Func<T> getter)
         {
             _getter = getter;
             return this;
         }
 
-        public Tween Setter(Action<float> setter)
+        public Tween<T> Setter(Action<T> setter)
         {
             _setter = setter;
             return this;
         }
 
-        public Tween From(float from)
+        public Tween<T> From(T from)
         {
             _from = from;
             return this;
         }
 
-        public Tween To(float to)
+        public Tween<T> To(T to)
         {
             _to = to;
             return this;
         }
 
-        public Tween Duration(float duration)
+        public Tween<T> Duration(float duration)
         {
             _duration = duration;
             return this;
         }
 
-        public Tween OnComplete(Action callback)
+        public Tween<T> OnComplete(Action callback)
         {
             _onComplete = callback;
             return this;
         }
 
-        public Tween Curve(AnimationCurve curve)
+        public Tween<T> Curve(AnimationCurve curve)
         {
             _curve = curve;
             return this;
         }
 
-        public Tween Reset()
+        public Tween<T> Reset()
         {
             Stop();
 
             _from = null;
-            _to = 0;
+            _to = default;
             _getter = null;
             _setter = null;
             _duration = 0;
@@ -150,7 +150,7 @@ namespace Plugins.AudioPooler.Tweening.Core
         {
             if (_from != null) _setter?.Invoke(_from.Value);
 
-            float from = _from ?? _getter?.Invoke() ?? 0;
+            T from = _from ?? _getter?.Invoke() ?? default;
 
             float time = 0;
             while (time < _duration)
@@ -158,7 +158,7 @@ namespace Plugins.AudioPooler.Tweening.Core
                 if (_isPaused == false)
                 {
                     time += Time.deltaTime;
-                    _setter?.Invoke(Mathf.Lerp(from, _to, Evaluate(time / _duration)));
+                    _setter?.Invoke(GetValueAtTime(from, _to, time / _duration));
                 }
 
                 yield return null;
@@ -169,7 +169,9 @@ namespace Plugins.AudioPooler.Tweening.Core
             _onComplete?.Invoke();
         }
 
-        private float Evaluate(float time)
+        protected abstract T GetValueAtTime(T startValue, T targetValue, float time);
+
+        protected float Evaluate(float time)
         {
             if (_curve == null) return time;
 

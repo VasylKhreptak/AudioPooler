@@ -1,6 +1,8 @@
 using System;
+using JetBrains.Annotations;
 using Plugins.AudioPooler.Linker;
 using Plugins.AudioPooler.TimeManagement;
+using Plugins.AudioPooler.Tweening;
 using Plugins.AudioPooler.Tweening.Core;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
@@ -12,8 +14,8 @@ namespace Plugins.AudioPooler.Core
         public AudioSource audioSource;
         public AudioSettings settings;
         public PositionLinker linker;
-        public Timer timer = new Timer();
-        public Tween volumeTween = new Tween();
+        public readonly Timer timer = new Timer();
+        public readonly FloatTween volumeTween = new FloatTween();
         public bool isPaused;
         public int ID = -1;
 
