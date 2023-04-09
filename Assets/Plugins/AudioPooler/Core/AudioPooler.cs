@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Plugins.AudioPooler.Data;
 using Plugins.AudioPooler.Enums;
-using Plugins.AudioPooler.Extensions;
 using Plugins.AudioPooler.Linker;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
@@ -261,6 +260,30 @@ namespace Plugins.AudioPooler.Core
             return false;
         }
 
+        public void SetBypassEffects(int ID, bool bypassEffects)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.bypassEffects = bypassEffects;
+            }
+        }
+
+        public void SetBypassListenerEffects(int ID, bool bypassListenerEffects)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.bypassListenerEffects = bypassListenerEffects;
+            }
+        }
+
+        public void SetBypassReverbZones(int ID, bool bypassReverbZones)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.bypassReverbZones = bypassReverbZones;
+            }
+        }
+
         public void SetVolume(int ID, float volume)
         {
             if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
@@ -282,9 +305,277 @@ namespace Plugins.AudioPooler.Core
                     .Curve(curve)
                     .OnComplete(() =>
                     {
-                        if (stopOnComplete) Stop(ID);
+                        if (stopOnComplete) Stop(poolItem);
                     })
                     .Play();
+            }
+        }
+
+        public void StopUpdatingVolume(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.volumeTween.Stop();
+            }
+        }
+
+        public void SetPitch(int ID, float pitch)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.pitch = ClampPitch(pitch);
+                poolItem.timer.UpdateDuration(GetDuration(poolItem.audioSource));
+            }
+        }
+
+        public void SetPitchSmooth(int ID, float pitch, float time, bool stopOnComplete = false, AnimationCurve curve = null)
+        {
+            pitch = ClampPitch(pitch);
+
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.pitchTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.pitch)
+                    .Setter(x =>
+                    {
+                        poolItem.audioSource.pitch = x;
+                        poolItem.timer.UpdateDuration(GetDuration(poolItem.audioSource));
+                    })
+                    .To(pitch)
+                    .Duration(time)
+                    .Curve(curve)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    })
+                    .Play();
+            }
+        }
+
+        public void StopUpdatingPitch(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.pitchTween.Stop();
+            }
+        }
+
+        public void SetStereoPan(int ID, float stereoPan)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.panStereo = stereoPan;
+            }
+        }
+
+        public void SetStereoPanSmooth(int ID, float stereoPan, float time, bool stopOnComplete = false, AnimationCurve curve = null)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.stereoPanTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.panStereo)
+                    .Setter(x => poolItem.audioSource.panStereo = x)
+                    .To(stereoPan)
+                    .Duration(time)
+                    .Curve(curve)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    })
+                    .Play();
+            }
+        }
+
+        public void StopUpdatingStereoPan(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.stereoPanTween.Stop();
+            }
+        }
+
+        public void SetSpatialBlend(int ID, float spatialBlend)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.spatialBlend = spatialBlend;
+            }
+        }
+
+        public void SetSpatialBlendSmooth(int ID, float spatialBlend, float time, bool stopOnComplete = false, AnimationCurve curve = null)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.spatialBlendTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.spatialBlend)
+                    .Setter(x => poolItem.audioSource.spatialBlend = x)
+                    .To(spatialBlend)
+                    .Duration(time)
+                    .Curve(curve)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    })
+                    .Play();
+            }
+        }
+
+        public void StopUpdatingSpatialBlend(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.spatialBlendTween.Stop();
+            }
+        }
+
+        public void SetReverbZoneMix(int ID, float reverbZoneMix)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.reverbZoneMix = reverbZoneMix;
+            }
+        }
+
+        public void SetReverbZoneMixSmooth(int ID, float reverbZoneMix, float time, bool stopOnComplete = false, AnimationCurve curve = null)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.reverbZoneMixTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.reverbZoneMix)
+                    .Setter(x => poolItem.audioSource.reverbZoneMix = x)
+                    .To(reverbZoneMix)
+                    .Duration(time)
+                    .Curve(curve)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    })
+                    .Play();
+            }
+        }
+
+        public void StopUpdatingReverbZoneMix(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.reverbZoneMixTween.Stop();
+            }
+        }
+
+        public void SetDopplerLevel(int ID, float dopplerLevel)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.dopplerLevel = dopplerLevel;
+            }
+        }
+
+        public void SetSpread(int ID, float spread)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.spread = spread;
+            }
+        }
+
+        public void SetSpreadSmooth(int ID, float spread, float time, bool stopOnComplete = false, AnimationCurve curve = null)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.spreadTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.spread)
+                    .Setter(x => poolItem.audioSource.spread = x)
+                    .To(spread)
+                    .Duration(time)
+                    .Curve(curve)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    })
+                    .Play();
+            }
+        }
+
+        public void StopUpdatingSpread(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.spreadTween.Stop();
+            }
+        }
+
+        public void SetMinDistance(int ID, float minDistance)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.minDistance = minDistance;
+            }
+        }
+
+        public void SetMinDistanceSmooth(int ID, float minDistance, float time, bool stopOnComplete = false, AnimationCurve curve = null)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.minDistanceTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.minDistance)
+                    .Setter(x => poolItem.audioSource.minDistance = x)
+                    .To(minDistance)
+                    .Duration(time)
+                    .Curve(curve)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    })
+                    .Play();
+            }
+        }
+
+        public void StopUpdatingMinDistance(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.minDistanceTween.Stop();
+            }
+        }
+
+        public void SetMaxDistance(int ID, float maxDistance)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.audioSource.maxDistance = maxDistance;
+            }
+        }
+
+        public void SetMaxDistanceSmooth(int ID, float maxDistance, float time, bool stopOnComplete = false, AnimationCurve curve = null)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.maxDistanceTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.maxDistance)
+                    .Setter(x => poolItem.audioSource.maxDistance = x)
+                    .To(maxDistance)
+                    .Duration(time)
+                    .Curve(curve)
+                    .OnComplete(() =>
+                    {
+                        if (stopOnComplete) Stop(poolItem);
+                    })
+                    .Play();
+            }
+        }
+
+        public void StopUpdatingMaxDistance(int ID)
+        {
+            if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
+            {
+                poolItem.maxDistanceTween.Stop();
             }
         }
 

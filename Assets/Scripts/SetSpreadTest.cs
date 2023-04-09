@@ -1,15 +1,16 @@
 using Plugins.AudioPooler.Core;
 using UnityEngine;
-using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
-public class SetVolumeSmoothTest : MonoBehaviour
+public class SetSpreadTest : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private AudioPooler _audioPooler;
 
     [Header("Preferences")]
-    [SerializeField] private AudioSettings _settings;
+    [SerializeField] private Plugins.AudioPooler.Data.AudioSettings _settings;
     [SerializeField] private bool _stopOnComplete = false;
+    [SerializeField] private float _from = 0f;
+    [SerializeField] private float _to = 1f;
 
     private int _ID;
 
@@ -29,12 +30,13 @@ public class SetVolumeSmoothTest : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            _audioPooler.SetVolumeSmooth(_ID, 0f, 2f, _stopOnComplete);
+            _audioPooler.SetSpread(_ID, _from);
+            _audioPooler.SetSpreadSmooth(_ID, _to, 2f, _stopOnComplete);
         }
-        
+
         if (Input.GetMouseButtonDown(2))
         {
-            _audioPooler.StopUpdatingVolume(_ID);
+            _audioPooler.StopUpdatingSpread(_ID);
         }
     }
 

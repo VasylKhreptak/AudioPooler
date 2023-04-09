@@ -373,7 +373,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 1.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -414,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &505112810
 Transform:
   m_ObjectHideFlags: 0
@@ -782,6 +782,81 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 76.739, y: 0, z: 0}
+--- !u!1 &993117819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 993117821}
+  - component: {fileID: 993117820}
+  m_Layer: 0
+  m_Name: SetspatialBlendSmooth
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &993117820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993117819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bda005a00831a544ab75ff8dff21f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPooler: {fileID: 730794657}
+  _settings:
+    clip: {fileID: 8300000, guid: fa268c20d59683f4ea7b1be3c55f9e97, type: 3}
+    audioMixerGroup: {fileID: 0}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    loop: 0
+    suspendOnDistance: 1
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    linkOnPlay: 1
+    linkerData:
+      linkTo: {fileID: 0}
+      offset: {x: 0, y: 0, z: 0}
+      axes: {x: 1, y: 1, z: 1}
+    playPosition: {x: 0, y: 0, z: 0}
+    audio3DSettings:
+      dopplerLevel: 1
+      spread: 0
+      rolloffMode: 0
+      minDistance: 1
+      maxDistance: 50
+  _stopOnComplete: 0
+  _from: 0
+  _to: 1
+--- !u!4 &993117821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993117819}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.235962, y: 47.74335, z: 2.6964283}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1020732516
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,6 +953,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1146279791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146279793}
+  - component: {fileID: 1146279792}
+  m_Layer: 0
+  m_Name: SetReverbZoneMixSmoothTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1146279792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146279791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c00af0859ec4c5448c550c6f40757ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPooler: {fileID: 730794657}
+  _settings:
+    clip: {fileID: 8300000, guid: fa268c20d59683f4ea7b1be3c55f9e97, type: 3}
+    audioMixerGroup: {fileID: 0}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    loop: 0
+    suspendOnDistance: 1
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    linkOnPlay: 1
+    linkerData:
+      linkTo: {fileID: 0}
+      offset: {x: 0, y: 0, z: 0}
+      axes: {x: 1, y: 1, z: 1}
+    playPosition: {x: 0, y: 0, z: 0}
+    audio3DSettings:
+      dopplerLevel: 1
+      spread: 0
+      rolloffMode: 0
+      minDistance: 1
+      maxDistance: 500
+  _stopOnComplete: 0
+  _from: 0
+  _to: 1
+--- !u!4 &1146279793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146279791}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.235962, y: 47.74335, z: 2.6964283}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1174659372
 GameObject:
@@ -1030,6 +1180,81 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222131953}
   m_Enabled: 1
+--- !u!1 &1280975846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1280975847}
+  - component: {fileID: 1280975848}
+  m_Layer: 0
+  m_Name: SetStereoPanSmoothTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1280975847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280975846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.235962, y: 47.74335, z: 2.6964283}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1280975848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280975846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf711c5ba4eb314284fe023546fb0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPooler: {fileID: 730794657}
+  _settings:
+    clip: {fileID: 8300000, guid: fa268c20d59683f4ea7b1be3c55f9e97, type: 3}
+    audioMixerGroup: {fileID: 0}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    loop: 0
+    suspendOnDistance: 1
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    linkOnPlay: 1
+    linkerData:
+      linkTo: {fileID: 0}
+      offset: {x: 0, y: 0, z: 0}
+      axes: {x: 1, y: 1, z: 1}
+    playPosition: {x: 0, y: 0, z: 0}
+    audio3DSettings:
+      dopplerLevel: 1
+      spread: 0
+      rolloffMode: 0
+      minDistance: 1
+      maxDistance: 500
+  _stopOnComplete: 0
+  _from: -1
+  _to: 1
 --- !u!1 &1527346724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,6 +1404,156 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1628806433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1628806435}
+  - component: {fileID: 1628806434}
+  m_Layer: 0
+  m_Name: SetPitchSmoothTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1628806434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628806433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4890a9bc1add7ae4782314563c96d452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPooler: {fileID: 730794657}
+  _settings:
+    clip: {fileID: 8300000, guid: fa268c20d59683f4ea7b1be3c55f9e97, type: 3}
+    audioMixerGroup: {fileID: 0}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    loop: 0
+    suspendOnDistance: 1
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    linkOnPlay: 1
+    linkerData:
+      linkTo: {fileID: 0}
+      offset: {x: 0, y: 0, z: 0}
+      axes: {x: 1, y: 1, z: 1}
+    playPosition: {x: 0, y: 0, z: 0}
+    audio3DSettings:
+      dopplerLevel: 1
+      spread: 0
+      rolloffMode: 0
+      minDistance: 1
+      maxDistance: 500
+  _stopOnComplete: 0
+  _from: 3
+  _to: 0.2
+--- !u!4 &1628806435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628806433}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.06013, y: 4.6883907, z: -0.7380657}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1759277126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1759277128}
+  - component: {fileID: 1759277127}
+  m_Layer: 0
+  m_Name: SetSpreadTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1759277127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759277126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27101e87c44960a4083294e008f6679d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioPooler: {fileID: 730794657}
+  _settings:
+    clip: {fileID: 8300000, guid: fa268c20d59683f4ea7b1be3c55f9e97, type: 3}
+    audioMixerGroup: {fileID: 0}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    loop: 0
+    suspendOnDistance: 1
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 1
+    reverbZoneMix: 1
+    linkOnPlay: 1
+    linkerData:
+      linkTo: {fileID: 0}
+      offset: {x: 0, y: 0, z: 0}
+      axes: {x: 1, y: 1, z: 1}
+    playPosition: {x: 0, y: 0, z: 0}
+    audio3DSettings:
+      dopplerLevel: 1
+      spread: 0
+      rolloffMode: 0
+      minDistance: 1
+      maxDistance: 500
+  _stopOnComplete: 0
+  _from: 0
+  _to: 360
+--- !u!4 &1759277128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759277126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.235962, y: 47.74335, z: 2.6964283}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1767417985
 GameObject:
@@ -1366,7 +1741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1841690605
 Transform:
   m_ObjectHideFlags: 0

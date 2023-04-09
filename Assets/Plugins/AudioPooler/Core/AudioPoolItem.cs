@@ -15,9 +15,22 @@ namespace Plugins.AudioPooler.Core
         public AudioSettings settings;
         public PositionLinker linker;
         public readonly Timer timer = new Timer();
-        public readonly FloatTween volumeTween = new FloatTween();
+        
         public bool isPaused;
         public int ID = -1;
+
+        #region Tweens
+
+        public readonly FloatTween volumeTween = new FloatTween();
+        public readonly FloatTween pitchTween = new FloatTween();
+        public readonly FloatTween spatialBlendTween = new FloatTween();
+        public readonly FloatTween stereoPanTween = new FloatTween();
+        public readonly FloatTween reverbZoneMixTween = new FloatTween();
+        public readonly FloatTween spreadTween = new FloatTween();
+        public readonly FloatTween minDistanceTween = new FloatTween();
+        public readonly FloatTween maxDistanceTween = new FloatTween();
+
+        #endregion
 
         public event Action<AudioPoolItem> onEnable;
         public event Action<AudioPoolItem> onDisable;
