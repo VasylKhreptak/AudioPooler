@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using Plugins.AudioPooler.Data;
 using Plugins.AudioPooler.Enums;
-using Plugins.AudioPooler.Extensions;
 using Plugins.AudioPooler.Linker;
+using Unity.VisualScripting;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
@@ -278,18 +277,22 @@ namespace Plugins.AudioPooler.Core
             }
         }
 
-        public void SetVolumeSmooth(int ID, float volume, float time, bool stopOnComplete = false, Ease ease = Ease.Linear)
+        public void SetVolumeSmooth(int ID, float volume, float time, bool stopOnComplete = false, AnimationCurve curve = null)
         {
             if (_activePool.TryGetValue(ID, out AudioPoolItem poolItem))
             {
-                poolItem.volumeTween?.Kill();
-                poolItem.volumeTween = poolItem.audioSource
-                    .DOFade(volume, time)
-                    .SetEase(ease)
+                poolItem.volumeTween
+                    .Reset()
+                    .Getter(() => poolItem.audioSource.volume)
+                    .Setter(x => poolItem.audioSource.volume = x)
+                    .To(volume)
+                    .Duration(time)
+                    .Curve(curve)
                     .OnComplete(() =>
                     {
-                        if (stopOnComplete) Stop(poolItem);
-                    });
+                        if (stopOnComplete) Stop(ID);
+                    })
+                    .Play();
             }
         }
 
@@ -410,7 +413,8 @@ namespace Plugins.AudioPooler.Core
         {
             if (poolItem.gameObject.activeSelf == false) return;
 
-            poolItem.waitTween.Kill();
+            poolItem.timer.Stop();
+            poolItem.volumeTween.Stop();
             poolItem.audioSource.Stop();
             poolItem.linker.StopUpdating();
             poolItem.onStop?.Invoke();
@@ -422,7 +426,8 @@ namespace Plugins.AudioPooler.Core
         {
             if (poolItem.isPaused) return;
 
-            poolItem.waitTween.Pause();
+            poolItem.timer.Pause();
+            poolItem.volumeTween.Pause();
             poolItem.audioSource.Pause();
             poolItem.onPause?.Invoke();
             poolItem.isPaused = true;
@@ -434,10 +439,11 @@ namespace Plugins.AudioPooler.Core
 
             if (poolItem.settings.loop == false)
             {
-                poolItem.waitTween.Play();
+                poolItem.timer.Resume();
             }
 
             poolItem.audioSource.Play();
+            poolItem.volumeTween.Resume();
             poolItem.onResume?.Invoke();
             poolItem.isPaused = false;
         }
@@ -453,8 +459,7 @@ namespace Plugins.AudioPooler.Core
 
         private void StopDelayed(AudioPoolItem poolItem)
         {
-            poolItem.waitTween.Kill();
-            poolItem.waitTween = this.DOWait(poolItem.audioSource.clip.length).OnComplete(() => Stop(poolItem));
+            poolItem.timer.Restart(poolItem.audioSource.clip.length, () => Stop(poolItem));
         }
 
         private AudioPoolItem GetPoolItem()

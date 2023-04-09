@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Plugins.AudioPooler.TimeManagement
 {
@@ -15,15 +16,15 @@ namespace Plugins.AudioPooler.TimeManagement
         {
             if (_coroutine == null)
             {
-                _coroutine = DelayHandler.Instance.StartCoroutine(TimerRoutine(duration, callback));
+                _coroutine = CoroutineHandler.Instance.StartCoroutine(TimerRoutine(duration, callback));
             }
         }
 
         public void Stop()
         {
-            if (_coroutine != null)
+            if (_coroutine != null && SceneManager.GetActiveScene().isLoaded)
             {
-                DelayHandler.Instance.StopCoroutine(_coroutine);
+                CoroutineHandler.Instance.StopCoroutine(_coroutine);
                 _coroutine = null;
             }
         }

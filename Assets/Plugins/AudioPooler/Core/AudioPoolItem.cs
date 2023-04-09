@@ -1,6 +1,7 @@
 using System;
-using DG.Tweening;
 using Plugins.AudioPooler.Linker;
+using Plugins.AudioPooler.TimeManagement;
+using Plugins.AudioPooler.Tweening.Core;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
 
@@ -11,8 +12,8 @@ namespace Plugins.AudioPooler.Core
         public AudioSource audioSource;
         public AudioSettings settings;
         public PositionLinker linker;
-        public Tween waitTween;
-        public Tween volumeTween;
+        public Timer timer = new Timer();
+        public Tween volumeTween = new Tween();
         public bool isPaused;
         public int ID = -1;
 
@@ -45,8 +46,8 @@ namespace Plugins.AudioPooler.Core
 
         private void KillTweens()
         {
-            waitTween.Kill();
-            volumeTween.Kill();
+            timer.Stop();
+            volumeTween.Stop();
         }
     }
 }

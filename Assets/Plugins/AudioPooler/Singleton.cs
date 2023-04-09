@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Plugins.AudioPooler
 {
@@ -14,9 +15,9 @@ namespace Plugins.AudioPooler
                 {
                     instance = FindObjectOfType<T>();
 
-                    if (instance == null)
+                    if (instance == null && SceneManager.GetActiveScene().isLoaded)
                     {
-                        GameObject singleton = new GameObject(typeof(T).Name);
+                        GameObject singleton = new GameObject("[Audio Pooler] " + typeof(T).Name);
                         instance = singleton.AddComponent<T>();
                         DontDestroyOnLoad(singleton);
                     }

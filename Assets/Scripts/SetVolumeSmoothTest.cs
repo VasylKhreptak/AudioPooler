@@ -1,5 +1,3 @@
-using DG.Tweening;
-using Plugins.AudioPooler;
 using Plugins.AudioPooler.Core;
 using UnityEngine;
 using AudioSettings = Plugins.AudioPooler.Data.AudioSettings;
@@ -11,7 +9,6 @@ public class SetVolumeSmoothTest : MonoBehaviour
 
     [Header("Preferences")]
     [SerializeField] private AudioSettings _settings;
-    [SerializeField] private Ease _ease = Ease.Linear;
     [SerializeField] private bool _stopOnComplete = false;
 
     private int _ID;
@@ -32,7 +29,7 @@ public class SetVolumeSmoothTest : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            _audioPooler.SetVolumeSmooth(_ID, 0f, 2f, _stopOnComplete, _ease);
+            _audioPooler.SetVolumeSmooth(_ID, 0f, 2f, _stopOnComplete, null);
         }
     }
 
